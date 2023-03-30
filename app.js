@@ -1,5 +1,6 @@
 const express = require('express');
 const https = require('https');
+const mongoose = require('mongoose');
 
 const app = express();
 const cache = {}
@@ -104,6 +105,60 @@ https.get('https://reqres.in/api/users', (res) => {
   });
 }).on('error', (error) => {
   console.error(`Failed to get users: ${error.message}`);
+});
+
+//Task-3
+//Connect to MongoDB
+mongoose.connect('mongodb+srv://rootUser:rootUser@nodejsinteriew.elagaxf.mongodb.net/?retryWrites=true&w=majority');
+
+//Create model
+const User = mongoose.model('User', {
+    name: String,
+    email: String,
+});
+
+app.use(express.json());
+
+//Create user
+app.post('/users', async (req,res) => {
+    const {name, email} = req.body;
+    const user = new User({
+        name,
+        email,
+    });
+
+    try{
+        await user.save();
+        res.status(201).send(user);
+    } catch (err) {
+        res.status(400).send(err);
+    }
+});
+
+//Get all users
+app.get('/users', async (req,res) => {
+    try{
+        const users = await User.find();
+        res.send(users);
+    } catch (err) {
+        res.status(500).send(err);
+    }
+});
+
+//Get user by id
+app.get('/users/:id', async (req,res) => {
+    const {id} = req.params;
+    try{
+        const userbyid = await User.findById(id);
+        if(!userbyid) {
+            res.status(404).send();
+        } 
+        else{
+            res.send(userbyid);
+        }
+    } catch (err) {
+        res.status(500).send(err);
+    }
 });
 
 app.listen(3000, () => {
