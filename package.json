@@ -1,0 +1,22 @@
+{
+  "name": "nodejsinterview",
+  "version": "1.0.0",
+  "description": "NodeJS interview tasks",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/neilaybhatt27/nodejsinterview.git"
+  },
+  "author": "Neilay Bhatt",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/neilaybhatt27/nodejsinterview/issues"
+  },
+  "homepage": "https://github.com/neilaybhatt27/nodejsinterview#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
